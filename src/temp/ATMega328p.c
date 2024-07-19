@@ -84,6 +84,12 @@
 #define     UCSR0C        *((volatile unsigned char*) 0xC2)
 
 /**
+ * PORTC
+ */
+#define     DDRC          *((volatile unsigned char*) 0x27)
+#define     PORTC         *((volatile unsigned char*) 0x28)
+
+/**
  * PORTD
  */
 #define     DDRD          *((volatile unsigned char*) 0x2A)

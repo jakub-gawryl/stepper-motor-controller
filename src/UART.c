@@ -1,8 +1,5 @@
-#include "ATMega328p.c"
-
-#ifndef F_CPU
-  #define F_CPU       16000000
-#endif
+#include <avr/io.h>
+#include <avr/interrupt.h>
 
 void setBaud(unsigned long baud) {
   unsigned int ubrr = (F_CPU / 16 / baud) - 1;
@@ -14,23 +11,19 @@ void usartInit(unsigned long baud) {
   // Set baud rate
   setBaud(baud);
 
-  // Set parity bits (1 0   Enabled, even parity)
-  UCSR0C |= (1 << 5);
-  UCSR0C &= ~(1 << 4);
+  // Set frame format: 8-bit data, 2 stop bit
+  UCSR0C = ( 1 << USBS0) | ( 3 << UCSZ00 );
 
-  // Set char size (8-bit)
-  UCSR0C |= (1 << 2) | (1 << 1);
+  // Enable USART Receiver and Transmitter
+  UCSR0B |= (1 << RXEN0) | (1 << TXEN0);
 
-  // Enable USART
-  UCSR0B |= (1 << 3);
-  UCSR0B |= (1 << 4);
+  // RX Complete Interrupt Enable
+  UCSR0B |= (1 << RXCIE0);
 }
 
 void setUSARTChar(unsigned char c) {
-  // Wait for buffer be empty - ready to be written
-  // TODO - maybe do it in async way?
-  // can this slow stepper motor down?
-  while ( !(UCSR0A & (1 << 5)));
+  // Wait for buffer to be empty - ready to be written
+  while (!(UCSR0A & (1 << UDRE0)));
 
   UDR0 = c;
 }
