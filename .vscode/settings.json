@@ -1,0 +1,19 @@
+{
+  "AVR.reporter.arguments": [
+    "-C"
+  ],
+  "AVR.source.compiler": "/usr/bin/avr-gcc",
+  "AVR.programmer.tool": "/usr/bin/avrdude",
+  "AVR.programmer.definitions": "/etc/avrdude.conf",
+  "AVR.source.libraries": [
+    "/usr/lib/avr/lib"
+  ],
+  "files.associations": {
+    "io.h": "c",
+    "iotn4313.h": "c",
+    "stddef.h": "c",
+    "iom3250pa.h": "c",
+    "interrupt.h": "c",
+    "stdio.h": "c"
+  }
+}
